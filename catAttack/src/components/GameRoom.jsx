@@ -15,6 +15,17 @@ export const GameRoom = ({
     meditar,
     actionMessage
 }) => {
+    let resultText = '';
+    if (resultMessage[2] == 1 && playerRole == 1) {
+        resultText = 'Tú ganas';
+    } else if (resultMessage[2] == 2 && playerRole == 2) {
+        resultText = 'Tú ganas';
+    } else if (resultMessage[2] == "Empate") {
+        resultText = 'Empate';
+    } else {
+        resultText = 'Enemigo gana';
+    }
+
     return (
         <div className="card">
             <div className="top-card">
@@ -22,18 +33,24 @@ export const GameRoom = ({
                 <button className="leave-room" onClick={onClick}>Salir de la sala</button>
             </div>
 
-            {(resultMessage[1] || resultMessage[2]) === 0 ? (
+            {(resultMessage[0] === 0 || resultMessage[1] === 0) ? (
                 <>
                     <CardContainer resultMessage={resultMessage} playerRole={playerRole} cat1={cat1} cat2={cat2} />
-                    <p>{resultMessage[0]}</p>
-                    <button onClick={onClick2}>¿Quieres otra partida?</button>
+                    <p>{resultText}</p>
+                    <button className="repeat-Game" onClick={onClick2}>¿Quieres otra partida?</button>
                 </>
             ) : (
                 <>
                     <CardContainer resultMessage={resultMessage} playerRole={playerRole} cat1={cat1} cat2={cat2} />
                     <IconsActions onClick={sendMessage} atacar={atacar} contraatacar={contraatacar} meditar={meditar} />
                     <footer className="footer_info">
-                        <div className="info">Info: {resultMessage[0]}</div>
+                        <div className="info">Info:
+                            {
+                                playerRole === 1
+                                    ? resultMessage[2]
+                                    : resultMessage[3]
+                            }
+                        </div>
                     </footer>
                     <p style={{ margin: '0px' }}>{actionMessage}</p>
                 </>

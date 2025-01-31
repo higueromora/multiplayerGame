@@ -152,7 +152,7 @@ h1{
   color: #020000;
 }
 
-.linkRoom{
+.linkRoom, .repeat-Game{
   font-size: 18px;
   display: inline-block;
   outline: 0;
@@ -175,6 +175,7 @@ h1{
   padding: 5PX;
   margin: 0 auto;
 }
+
 
 /* .logo {
   height: 6em;

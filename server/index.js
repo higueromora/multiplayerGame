@@ -10,7 +10,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // Asegúrate de que coincide con la URL de React
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
   },
 });
@@ -62,33 +62,32 @@ io.on("connection", (socket) => {
       }
     
 
-      // TODO ARREGLAR AQUÍ PARA IDENTIFICAR JUGADOR GANADOR MIRAR EL PLAYEROLE
       if (roomInfo.pv[player1] === 0 && roomInfo.pv[player2] === 0) {
         io.to(room).emit("receive_result", [
-          "Empate",
           roomInfo.pv[player1],
-          roomInfo.pv[player2]
+          roomInfo.pv[player2],
+          "Empate"
         ]);
 
       } else if (roomInfo.pv[player1] === 0) {
         io.to(room).emit("receive_result", [
-          `El ganador es ${player2Name}`,
           roomInfo.pv[player1],
-          roomInfo.pv[player2]
+          roomInfo.pv[player2],
+          2
         ]);
 
       } else if (roomInfo.pv[player2] === 0) {
         io.to(room).emit("receive_result", [
-          `El ganador es ${player1Name}`,
           roomInfo.pv[player1], 
-          roomInfo.pv[player2]
+          roomInfo.pv[player2],
+          1
         ]);
       } else {
         io.to(room).emit("receive_result", [
-          `Jugador 1 (${action1}) y vida ${roomInfo.pv[player1]} 
-           vs Jugador 2 (${action2}) y vida ${roomInfo.pv[player2]}`,
           roomInfo.pv[player1],
-          roomInfo.pv[player2]
+          roomInfo.pv[player2],
+          `Jugador (${action1}) y enemigo (${action2})`,
+           `Jugador  (${action2}) enemigo (${action1})`
         ]);
       }
       
